@@ -1,3 +1,4 @@
+// dit is voor de sidebar
 const openSidebarButton = document.getElementById('sidebarShow');
 const sidebar = document.getElementById('sidebar');
 function openSidebar(){
@@ -17,8 +18,11 @@ function sidebarToggle(){
         closeSidebar();
     }
 }
+
 openSidebarButton.addEventListener('click', sidebarToggle);
-var map = L.map('map').setView([52.199715, 5.515292], 8);
+
+// hier onder begint de js van de kaart
+var map = L.map('map').setView([52.199, 5.515], 8);
 
 L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
     maxZoom: 19,
@@ -26,9 +30,6 @@ L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r
 }).addTo(map);
 
 
-// function onMapClick(e) {
-//     alert("U heeft hier op de map geklikt: " + e.latlng);
-// }
 
 map.on('click', onMapClick);
 
@@ -43,4 +44,4 @@ function onMapClick(e) {
 }
 
 map.on('click', onMapClick);
-map.setView([52.199715, 5.515292], 8);
+map.panTo([53.277761, 6.636075], 8);
