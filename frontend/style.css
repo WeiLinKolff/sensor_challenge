@@ -5,6 +5,7 @@ body{
     width: 100vw;
     height: 100vh;
     overflow: hidden;
+    background-color: #45486f;
 }
 
 
@@ -47,5 +48,5 @@ body{
 }
 
 h1 {
-    background-color: #45486f; ;
+    background-color: #45486f;
 }
