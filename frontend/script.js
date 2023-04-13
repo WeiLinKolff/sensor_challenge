@@ -1,16 +1,23 @@
 const openSidebarButton = document.getElementById('sidebarShow');
 const sidebar = document.getElementById('sidebar');
 function openSidebar(){
-    openSidebarButton.style.display = 'none';
+    openSidebarButton.innerHTML = '<i class="fa fa-arrow-left"></i>'
     sidebar.style.display = 'block';
 
 }
 function closeSidebar(){
-    openSidebarButton.style.display = 'block';
-    sidebar.style.display = 'none';
+    openSidebarButton.innerHTML = "<i class='fa fa-arrow-right'>"
+    sidebar.style.display = 'none'
 
 }
-openSidebarButton.addEventListener('click', openSidebar);
+function sidebarToggle(){
+    if (sidebar.style.display == 'none') {
+        openSidebar();
+    } else{
+        closeSidebar();
+    }
+}
+openSidebarButton.addEventListener('click', sidebarToggle);
 var map = L.map('map').setView([52.199715, 5.515292], 8);
 
 L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {

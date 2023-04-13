@@ -20,6 +20,7 @@ body{
     background: #45486f;
 
 }
+   
 
 #sidebar {
     height: 100vh;
@@ -38,7 +39,7 @@ body{
     top: 2vh;
     
     left: 2vh;
-    z-index: 99999;
+    z-index: 999999;
     position: absolute;
     font-size: 3vh;
     color: white;
