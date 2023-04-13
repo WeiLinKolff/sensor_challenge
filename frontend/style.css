@@ -5,8 +5,7 @@ body{
     width: 100vw;
     height: 100vh;
     overflow: hidden;
-   
-    background-color: #396f90;
+    background-color: #45486f;
 }
 
 
@@ -48,3 +47,15 @@ body{
     
 }
 
+h1 {
+    background-color: #45486f;
+    font-size: 30px;
+}
+
+#help {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    gap: 70vw;
+}
