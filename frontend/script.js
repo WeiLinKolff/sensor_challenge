@@ -31,7 +31,7 @@ var popup = L.popup()
     .openOn(map);
 
 function onMapClick(e) {
-    alert("You clicked the map at " + e.latlng);
+    alert("U heeft hier op de map geklikt: " + e.latlng);
 }
 
 map.on('click', onMapClick);
