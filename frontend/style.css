@@ -85,6 +85,10 @@ p {
 
 
 .popup {
+    height: 10vh;
+    width: 10vw;
+    top: 13%;
+    right: 3%;
     position: absolute;
     z-index: 9999;
     background-color: white;

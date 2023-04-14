@@ -20,7 +20,7 @@ function sidebarToggle() {
 openSidebarButton.addEventListener("click", sidebarToggle);
 // gevoel temperatuur
 function calculateWindChill(T, W) {
-    return 33 + (T - 33) * (0, 474 + 0, (454 * W) ^ 0, 5 - 0, 0454 * W);
+  return 33 + (T - 33) * (0, 474 + 0, (454 * W) ^ 0, 5 - 0, 0454 * W);
 }
 // hier onder begint de js van de kaart
 var map = L.map("map").setView([52.199, 5.515], 8);
@@ -114,20 +114,30 @@ fetch("../backend/output.json")
       }
     });
 
+    let currentPopup = null; // Variable to keep track of the current popup
+
     let elements = document.getElementsByClassName("leaflet-interactive");
     for (let i = 0; i < elements.length; i++) {
       elements[i].addEventListener("click", showPopup);
     }
 
     function showPopup(event) {
+      // Remove the current popup if exists
+      if (currentPopup) {
+        currentPopup.remove();
+        currentPopup = null;
+      }
+
       let popup = document.createElement("div");
-      popup.textContent = "Your popup message here";
+      popup.textContent = "Temperatuur & oorzaak";
       popup.classList.add("popup");
 
-      let rect = event.target.getBoundingClientRect();
-      popup.style.top = rect.bottom + "px";
-      popup.style.left = rect.left + "px";
+      // Set the position of the popup relative to the viewport
+      popup.style.top = '13%';
+      popup.style.right = '3%';
 
       document.body.appendChild(popup);
+
+      currentPopup = popup; // Update the current popup variable
     }
   });
