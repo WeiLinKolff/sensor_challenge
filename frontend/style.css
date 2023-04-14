@@ -32,11 +32,7 @@ body{
     position: absolute;
     top: 0;
     bottom: 0;
-<<<<<<< Updated upstream
-    z-index: 99998;
-=======
     z-index: 99;
->>>>>>> Stashed changes
     border-radius: 10px;
     display: none;
 }
@@ -53,8 +49,8 @@ body{
     
 }
 
-h1 {
-    background-color: #45486f;
+h1, p {
+   color: white;
     font-size: 30px;
 }
 
@@ -64,4 +60,11 @@ h1 {
     justify-content: center;
     align-items: center;
     gap: 70vw;
+}
+
+#sb-info{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
