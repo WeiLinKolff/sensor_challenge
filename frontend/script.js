@@ -64,3 +64,19 @@ data.forEach(function (element) {
     const longitude = element.location.longitude;
     console.log(`Temperature: ${temperature}, Latitude: ${latitude}, Longitude: ${longitude}`);
 });
+
+
+
+var pin = L.icon({
+    iconUrl: 'pin.png',
+    iconSize: [50, 50],
+    iconAnchor: [25, 50],
+    popupAnchor: [0, -50]
+});
+
+
+var marker = L.marker([52.199, 5.515], { icon: pin }).addTo(map);
+
+
+marker.bindPopup("<b>Marker</b><br>Popup").openPopup();
+
