@@ -32,11 +32,7 @@ body{
     position: absolute;
     top: 0;
     bottom: 0;
-<<<<<<< Updated upstream
-    z-index: 99998;
-=======
     z-index: 99;
->>>>>>> Stashed changes
     border-radius: 10px;
     display: none;
 }
