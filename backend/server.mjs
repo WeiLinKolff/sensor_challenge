@@ -4,10 +4,10 @@ import fs from "fs";
 const app = express();
 
 const outputFilePath = "output.json";
-const writeStream = fs.createWriteStream(outputFilePath, { flags: 'w' });
+const writeStream = fs.createWriteStream(outputFilePath, { flags: "w" });
 
 app.listen(3300, () => {
-  console.log("Server is running on port 3000");
+  console.log("Server is running on port 3300");
 });
 
 app.get("/getsensors", async (req, res) => {
@@ -19,9 +19,9 @@ app.get("/getsensors", async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
-app.get("/gettemp", async (req, res) => {
+app.get("/getdata", async (req, res) => {
   try {
-    const data = await api.gettemp();
+    const data = await api.getdatalocal();
     res.send(data);
   } catch (error) {
     console.error(error);
@@ -30,10 +30,14 @@ app.get("/gettemp", async (req, res) => {
 });
 
 class sensorApi {
-  constructor() {}
+  constructor() {
+    setInterval(() => {
+      this.getsensors();
+    }, 300000);
+  }
 
   getsensors() {
-    fetch('https://data.sensor.community/airrohr/v1/filter/country=NL')
+    fetch("https://data.sensor.community/airrohr/v1/filter/country=NL")
       .then((response) => {
         // Check if the response is OK (status code 200)
         if (!response.ok) {
@@ -59,21 +63,6 @@ class sensorApi {
 
     writeStream.on("error", (error) => {
       console.error("Failed to write API response data to file:", error);
-    });
-  }
-
-  async gettemp() {
-    let tempObserved = [];
-    const response = await fetch(
-      "https://api-samenmeten.rivm.nl/v1.0/ObservedProperties"
-    );
-    const data = await response.json();
-    let tempobservations = await data.forEach((obj) => {
-      if (obj.name.indexOf("temperatuur") >= 0) {
-        tempObserved.push(obj);
-      }
-
-      return tempobservations;
     });
   }
 }
