@@ -5,6 +5,8 @@ function openSidebar() {
   openSidebarButton.innerHTML = '<i class="fa fa-arrow-left"></i>';
   sidebar.style.display = "block";
 }
+
+;
 function closeSidebar() {
   openSidebarButton.innerHTML = "<i class='fa fa-arrow-right'>";
   sidebar.style.display = "none";
@@ -20,7 +22,7 @@ function sidebarToggle() {
 openSidebarButton.addEventListener("click", sidebarToggle);
 // gevoel temperatuur
 function calculateWindChill(T, W) {
-    return 33 + (T - 33) * (0, 474 + 0, (454 * W) ^ 0, 5 - 0, 0454 * W);
+  return 33 + (T - 33) * (0, 474 + 0, (454 * W) ^ 0, 5 - 0, 0454 * W);
 }
 // hier onder begint de js van de kaart
 var map = L.map("map").setView([52.199, 5.515], 8);
@@ -114,20 +116,81 @@ fetch("../backend/output.json")
       }
     });
 
+    let currentPopup = null; // Variable to keep track of the current popup
+
     let elements = document.getElementsByClassName("leaflet-interactive");
     for (let i = 0; i < elements.length; i++) {
       elements[i].addEventListener("click", showPopup);
     }
 
     function showPopup(event) {
-      let popup = document.createElement("div");
-      popup.textContent = "jaja teehee";
-      popup.classList.add("popup");
-
-      let rect = event.target.getBoundingClientRect();
-      popup.style.top = rect.bottom + "px";
-      popup.style.left = rect.left + "px";
-
-      document.body.appendChild(popup);
-    }
+        // Get the clicked marker's latitude and longitude
+        const latitude = event.target._latlng.lat;
+        const longitude = event.target._latlng.lng;
+      
+        // Find the data item for the clicked marker
+        const item = data.find(
+          (item) =>
+            item.location.latitude === latitude &&
+            item.location.longitude === longitude
+        );
+      
+        if (item) {
+          // Retrieve the temperature value
+          const temperatureValue = item.sensordatavalues.find(
+            (item) => item.value_type === "temperature"
+          );
+      
+          if (temperatureValue && temperatureValue.value) {
+            const temperature = parseFloat(temperatureValue.value);
+      
+            // Set the content of the popup to include the temperature value
+            const popupContent = `
+              <div class="popup">
+                <h4>Temperatuur: ${temperature} &deg;C</h4>
+                <p>Oorzaak: ${item.oorzaak}</p>
+              </div>
+            `;
+      
+            // Create and open a new popup with the updated content
+            const popup = L.popup()
+              .setLatLng([latitude, longitude])
+              .setContent(popupContent)
+              .openOn(map);
+      
+            // Close the current popup if exists
+            if (currentPopup) {
+              currentPopup.closePopup();
+            }
+      
+            // Update the current popup variable to the new popup
+            currentPopup = popup;
+          } else {
+            console.log("Temperature value not found for item:", item);
+          }
+        } else {
+          console.log("Data item not found for clicked marker");
+        }
+      }
+      
   });
+
+
+  // average temp in screen
+
+// function getCurrentMapCorners(){
+//   let bounds = map.getBounds();
+//   let ne = bounds.getNorthEast();
+//   let sw = bounds.getSouthWest();
+//   let mapCorners = ne;
+//   return(mapCorners);
+// }
+// let corner = getCurrentMapCorners();
+// console.log(corner);
+// // function getDataFromScreen(mapCornerNE, mapCornerSW){
+  
+// // }
+const allSensors = document.getElementsByClassName('sensorMarker');
+for(let i = 0; i < allSensors.length; i++){
+  allSensors[i].setAttribute('id', i.toString());
+}
