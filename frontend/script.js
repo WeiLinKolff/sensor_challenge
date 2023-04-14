@@ -121,7 +121,7 @@ fetch("../backend/output.json")
 
     function showPopup(event) {
       let popup = document.createElement("div");
-      popup.textContent = "Your popup message here";
+      popup.textContent = "jaja teehee";
       popup.classList.add("popup");
 
       let rect = event.target.getBoundingClientRect();
