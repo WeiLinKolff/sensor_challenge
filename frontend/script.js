@@ -129,7 +129,7 @@ fetch("../backend/output.json")
       }
 
       let popup = document.createElement("div");
-      popup.textContent = "Temperatuur & oorzaak";
+      popup.insertAdjacentElement = temperature;
       popup.classList.add("popup");
 
       // Set the position of the popup relative to the viewport
