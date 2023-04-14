@@ -1,10 +1,8 @@
-fetch("shadespotSearch.json")
-  .then(response => response.json())
-  .then(data => {
-    console.log(data);
-    // Do something with the data here
-  })
-  .catch(error => console.log(error));
+
+fetch('127.0.0.1:8080/shadespotSearch.json')
+    .then((response) => response.json())
+    .then((json) =>  DATA = json);
+
 //  function search(event) {
 //     event.preventDefault(); // voorkomt dat het formulier wordt verzonden
   
