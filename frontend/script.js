@@ -5,6 +5,8 @@ function openSidebar() {
   openSidebarButton.innerHTML = '<i class="fa fa-arrow-left"></i>';
   sidebar.style.display = "block";
 }
+
+;
 function closeSidebar() {
   openSidebarButton.innerHTML = "<i class='fa fa-arrow-right'>";
   sidebar.style.display = "none";
@@ -141,3 +143,23 @@ fetch("../backend/output.json")
       currentPopup = popup; // Update the current popup variable
     }
   });
+
+
+  // average temp in screen
+
+// function getCurrentMapCorners(){
+//   let bounds = map.getBounds();
+//   let ne = bounds.getNorthEast();
+//   let sw = bounds.getSouthWest();
+//   let mapCorners = ne;
+//   return(mapCorners);
+// }
+// let corner = getCurrentMapCorners();
+// console.log(corner);
+// // function getDataFromScreen(mapCornerNE, mapCornerSW){
+  
+// // }
+const allSensors = document.getElementsByClassName('sensorMarker');
+for(let i = 0; i < allSensors.length; i++){
+  allSensors[i].setAttribute('id', i.toString());
+}
