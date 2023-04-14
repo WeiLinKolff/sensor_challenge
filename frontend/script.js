@@ -100,10 +100,9 @@ fetch("../backend/output.json")
   });
 
 
-<<<<<<< Updated upstream
-=======
+
   // popups voor de sensors
-  function showSensorPopup(event){
-    let 
-  }
->>>>>>> Stashed changes
+//   function showSensorPopup(event){
+//     let 
+//   }
+
