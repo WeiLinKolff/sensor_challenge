@@ -124,24 +124,55 @@ fetch("../backend/output.json")
     }
 
     function showPopup(event) {
-      // Remove the current popup if exists
-      if (currentPopup) {
-        currentPopup.remove();
-        currentPopup = null;
+        // Get the clicked marker's latitude and longitude
+        const latitude = event.target._latlng.lat;
+        const longitude = event.target._latlng.lng;
+      
+        // Find the data item for the clicked marker
+        const item = data.find(
+          (item) =>
+            item.location.latitude === latitude &&
+            item.location.longitude === longitude
+        );
+      
+        if (item) {
+          // Retrieve the temperature value
+          const temperatureValue = item.sensordatavalues.find(
+            (item) => item.value_type === "temperature"
+          );
+      
+          if (temperatureValue && temperatureValue.value) {
+            const temperature = parseFloat(temperatureValue.value);
+      
+            // Set the content of the popup to include the temperature value
+            const popupContent = `
+              <div class="popup">
+                <h4>Temperatuur: ${temperature} &deg;C</h4>
+                <p>Oorzaak: ${item.oorzaak}</p>
+              </div>
+            `;
+      
+            // Create and open a new popup with the updated content
+            const popup = L.popup()
+              .setLatLng([latitude, longitude])
+              .setContent(popupContent)
+              .openOn(map);
+      
+            // Close the current popup if exists
+            if (currentPopup) {
+              currentPopup.closePopup();
+            }
+      
+            // Update the current popup variable to the new popup
+            currentPopup = popup;
+          } else {
+            console.log("Temperature value not found for item:", item);
+          }
+        } else {
+          console.log("Data item not found for clicked marker");
+        }
       }
-
-      let popup = document.createElement("div");
-      popup.insertAdjacentElement = temperature;
-      popup.classList.add("popup");
-
-      // Set the position of the popup relative to the viewport
-      popup.style.top = '13%';
-      popup.style.right = '3%';
-
-      document.body.appendChild(popup);
-
-      currentPopup = popup; // Update the current popup variable
-    }
+      
   });
 
 
