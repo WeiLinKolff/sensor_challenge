@@ -8,6 +8,10 @@ body{
     background-color: #45486f;
 }
 
+#logo {
+    position: absolute;
+    top: -3;
+}
 
 #map {
     height: 100vh;
