@@ -53,17 +53,6 @@ map.panTo([53.277761, 6.636075], 8);
 // de markers worden gemaakt op basis van de data in de json file
 
 
-// data.forEach(function (element) {
-//     const temperature = element.sensordatavalues.find(function (value) {
-//         return value.value_type === 'temperature';
-//     }).value;
-//     const latitude = element.location.latitude;
-//     const longitude = element.location.longitude;
-//     console.log(`Temperature: ${temperature}, Latitude: ${latitude}, Longitude: ${longitude}`);
-// });
-
-
-
 var pin = L.icon({
   iconUrl: "pin.png",
   iconSize: [50, 50],
@@ -78,21 +67,36 @@ fetch("../backend/output.json")
   .then((response) => response.json())
   .then((data) => {
     data.forEach((item) => {
-      if (item.location.indoor === 0) {
+      if (item.location.indoor === 0 && item.sensordatavalues && item.sensordatavalues.length > 0) {
         const latitude = item.location.latitude;
         const longitude = item.location.longitude;
-        const temperatureValue = item.sensordatavalues.filter(item => item.value_type === "temperature"); 
-        // if(temperatureValue < 5) {
-            var DynamicColor = "1D3354";
-        // }
-        L.circle([latitude, longitude], { radius: 200, color: DynamicColor }).addTo(map);
-      }
-
-      else {
-        console.log("geen buiten sensor");
+        const temperatureValue = item.sensordatavalues.find(item => item.value_type === "temperature");
+        if (temperatureValue && temperatureValue.value) {
+          const temperature = parseFloat(temperatureValue.value);
+          if (temperature < 0) {
+            var DynamicColor = "#1D3354";
+          } else if (temperature > 3) {
+            var DynamicColor = "#353553";
+          } else if (temperature > 6) {
+            var DynamicColor = "#4C3751";
+          } else if (temperature > 9) {
+            var DynamicColor = "#63394F";
+          } else if (temperature > 12) {
+            var DynamicColor = "#7A3A4D";
+          } else if (temperature > 15) {
+            var DynamicColor = "#863B4C";
+          }
+          L.circle([latitude, longitude], { radius: 200, color: DynamicColor }).addTo(map);
+        } else {
+          console.log("Temperature value not found for item:", item);
+        }
+      } else {
+        console.log("Geen buiten sensor or empty sensordatavalues for item:", item);
       }
     });
   })
   .catch((error) => {
     console.error("Error fetching JSON file:", error);
   });
+
+
