@@ -1,28 +1,28 @@
 // dit is voor de sidebar
 const openSidebarButton = document.getElementById('sidebarShow');
 const sidebar = document.getElementById('sidebar');
-function openSidebar(){
+function openSidebar() {
     openSidebarButton.innerHTML = '<i class="fa fa-arrow-left"></i>'
     sidebar.style.display = 'block';
 
 }
-function closeSidebar(){
+function closeSidebar() {
     openSidebarButton.innerHTML = "<i class='fa fa-arrow-right'>"
     sidebar.style.display = 'none'
 
 }
-function sidebarToggle(){
+function sidebarToggle() {
     if (sidebar.style.display == 'none') {
         openSidebar();
-    } else{
+    } else {
         closeSidebar();
     }
 }
 
 openSidebarButton.addEventListener('click', sidebarToggle);
 // gevoel temperatuur
-function calculateWindChill(T, W){
-    return(33 + (T - 33) * (0,474 + 0,454 * W^0,5 - 0,0454 * W));
+function calculateWindChill(T, W) {
+    return (33 + (T - 33) * (0, 474 + 0, 454 * W ^ 0, 5 - 0, 0454 * W));
 }
 // hier onder begint de js van de kaart
 var map = L.map('map').setView([52.199, 5.515], 8);
@@ -48,3 +48,19 @@ function onMapClick(e) {
 
 map.on('click', onMapClick);
 map.panTo([53.277761, 6.636075], 8);
+
+
+
+// dit is voor eh casper?
+// een for each loop om alle markers te maken
+// de markers worden gemaakt op basis van de data in de json file
+
+
+data.forEach(function (element) {
+    const temperature = element.sensordatavalues.find(function (value) {
+        return value.value_type === 'temperature';
+    }).value;
+    const latitude = element.location.latitude;
+    const longitude = element.location.longitude;
+    console.log(`Temperature: ${temperature}, Latitude: ${latitude}, Longitude: ${longitude}`);
+});

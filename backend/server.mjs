@@ -33,7 +33,7 @@ class sensorApi {
   constructor() {
     setInterval(() => {
       this.getsensors();
-    }, 300000);
+    }, 30000);
   }
 
   getsensors() {
