@@ -20,11 +20,7 @@ function sidebarToggle() {
 openSidebarButton.addEventListener("click", sidebarToggle);
 // gevoel temperatuur
 function calculateWindChill(T, W) {
-<<<<<<< Updated upstream
-  return (33 + (T - 33) * (0, 474 + 0, (454 * W) ^ 0, 5 - 0, 0454 * W));
-=======
     return 33 + (T - 33) * (0, 474 + 0, (454 * W) ^ 0, 5 - 0, 0454 * W);
->>>>>>> Stashed changes
 }
 // hier onder begint de js van de kaart
 var map = L.map("map").setView([52.199, 5.515], 8);
@@ -38,18 +34,18 @@ L.tileLayer(
     }
 ).addTo(map);
 
-map.on("click", onMapClick);
+// map.on("click", onMapClick);
 
-var popup = L.popup();
+// var popup = L.popup();
 
-function onMapClick(e) {
-    popup
-        .setLatLng(e.latlng)
-        .setContent("U heeft hier op de map geklikt: " + e.latlng.toString())
-        .openOn(map);
-}
+// function onMapClick(e) {
+//     popup
+//         .setLatLng(e.latlng)
+//         .setContent("U heeft hier op de map geklikt: " + e.latlng.toString())
+//         .openOn(map);
+// }
 
-map.on("click", onMapClick);
+// map.on("click", onMapClick);
 map.panTo([53.277761, 6.636075], 8);
 
 // dit is voor eh casper?
@@ -68,48 +64,6 @@ var pin = L.icon({
 
 
 fetch("../backend/output.json")
-<<<<<<< Updated upstream
-  .then((response) => response.json())
-  .then((data) => {
-    data.forEach((item) => {
-      if (item.location.indoor === 0 && item.sensordatavalues && item.sensordatavalues.length > 0) {
-        const latitude = item.location.latitude;
-        const longitude = item.location.longitude;
-        const temperatureValue = item.sensordatavalues.find(item => item.value_type === "temperature");
-        if (temperatureValue && temperatureValue.value) {
-          const temperature = parseFloat(temperatureValue.value);
-          if (temperature < 0) {
-            var DynamicColor = "#1D3354";
-          } else if (temperature > 3) {
-            var DynamicColor = "#0008FF";
-          } else if (temperature > 6) {
-            var DynamicColor = "#2007E1";
-          } else if (temperature > 9) {
-            var DynamicColor = "#4006C2";
-          } else if (temperature > 12) {
-            var DynamicColor = "#6005A3";
-          } else if (temperature > 15) {
-            var DynamicColor = "#800484";
-          } else if (temperature > 18) {
-            var DynamicColor = "#A00365";
-          } else if (temperature > 21) {
-            var DynamicColor = "#C00246";
-          } else if (temperature > 24) {
-            var DynamicColor = "#E00127";
-          } else if (temperature > 27) {
-            var DynamicColor = "#FF0008";
-          }
-
-          
-          L.circle([latitude, longitude], { radius: 200, color: DynamicColor }).addTo(map);
-          L.bind
-        } else {
-          console.log("Temperature value not found for item:", item);
-        }
-      } else {
-        console.log("Geen buiten sensor or empty sensordatavalues for item:", item);
-      }
-=======
     .then((response) => response.json())
     .then((data) => {
         data.forEach((item) => {
@@ -143,18 +97,9 @@ fetch("../backend/output.json")
     })
     .catch((error) => {
         console.error("Error fetching JSON file:", error);
->>>>>>> Stashed changes
     });
 
 
-<<<<<<< Updated upstream
-
-  // popups voor de sensors
-//   function showSensorPopup(event){
-//     let 
-//   }
-
-=======
 let elements = document.getElementsByClassName('leaflet-interactive');
 for (let i = 0;
     i < elements.length; i++) {
@@ -171,4 +116,3 @@ function showPopup(event) {
 
     document.body.appendChild(popup);
 }
->>>>>>> Stashed changes
