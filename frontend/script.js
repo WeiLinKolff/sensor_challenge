@@ -6,7 +6,7 @@ function openSidebar() {
   sidebar.style.display = "block";
 }
 
-;
+
 function closeSidebar() {
   openSidebarButton.innerHTML = "<i class='fa fa-arrow-right'>";
   sidebar.style.display = "none";
@@ -21,9 +21,9 @@ function sidebarToggle() {
 
 openSidebarButton.addEventListener("click", sidebarToggle);
 // gevoel temperatuur
-function calculateWindChill(T, W) {
-  return 33 + (T - 33) * (0, 474 + 0, (454 * W) ^ 0, 5 - 0, 0454 * W);
-}
+// function calculateWindChill(T, W) {
+//   return 33 + (T - 33) * (0, 474 + 0, (454 * W) ^ 0, 5 - 0, 0454 * W);
+// }
 // hier onder begint de js van de kaart
 var map = L.map("map").setView([52.199, 5.515], 8);
 
@@ -191,6 +191,10 @@ fetch("../backend/output.json")
   
 // // }
 const allSensors = document.getElementsByClassName('sensorMarker');
-for(let i = 0; i < allSensors.length; i++){
-  allSensors[i].setAttribute('id', i.toString());
+function setId(){
+  for(let i = 0; i < allSensors.length(); i++){
+    allSensors[i].id = i.toString();
+    
+  }
 }
+setId();
