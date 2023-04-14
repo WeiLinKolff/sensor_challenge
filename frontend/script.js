@@ -76,17 +76,28 @@ fetch("../backend/output.json")
           if (temperature < 0) {
             var DynamicColor = "#1D3354";
           } else if (temperature > 3) {
-            var DynamicColor = "#353553";
+            var DynamicColor = "#0008FF";
           } else if (temperature > 6) {
-            var DynamicColor = "#4C3751";
+            var DynamicColor = "#2007E1";
           } else if (temperature > 9) {
-            var DynamicColor = "#63394F";
+            var DynamicColor = "#4006C2";
           } else if (temperature > 12) {
-            var DynamicColor = "#7A3A4D";
+            var DynamicColor = "#6005A3";
           } else if (temperature > 15) {
-            var DynamicColor = "#863B4C";
+            var DynamicColor = "#800484";
+          } else if (temperature > 18) {
+            var DynamicColor = "#A00365";
+          } else if (temperature > 21) {
+            var DynamicColor = "#C00246";
+          } else if (temperature > 24) {
+            var DynamicColor = "#E00127";
+          } else if (temperature > 27) {
+            var DynamicColor = "#FF0008";
           }
+
+          
           L.circle([latitude, longitude], { radius: 200, color: DynamicColor }).addTo(map);
+          L.bind
         } else {
           console.log("Temperature value not found for item:", item);
         }
