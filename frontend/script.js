@@ -20,7 +20,10 @@ function sidebarToggle(){
 }
 
 openSidebarButton.addEventListener('click', sidebarToggle);
-
+// gevoel temperatuur
+function calculateWindChill(T, W){
+    return(33 + (T - 33) * (0,474 + 0,454 * W^0,5 - 0,0454 * W));
+}
 // hier onder begint de js van de kaart
 var map = L.map('map').setView([52.199, 5.515], 8);
 
