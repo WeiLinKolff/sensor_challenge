@@ -10,7 +10,7 @@ body{
 
 #logo {
     position: absolute;
-    top: 0;
+    top: -3;
 }
 
 #map {
