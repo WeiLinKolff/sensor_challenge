@@ -371,7 +371,7 @@ function searchObjects(search) {
       let regex = new RegExp(search.toLowerCase());
         if (regex.test(Data[i].naam.toLowerCase())) {
         
-          matchedObjects.push(Data[i].naam);
+          matchedObjects.push(Data[i]);
           
         }
       
@@ -387,9 +387,10 @@ function query() {
   for(let i = 0; results.length > i; i++){
     console.log(results[i]);
   }
+  moveToSearchLocation(results[0]);
 }
 searchBTN.addEventListener('click', query);
 
-function moveToSearchLocation(){
-  map
+function moveToSearchLocation(obj){
+  map.panTo([parseFloat(obj.latitude), parseFloat(obj.longitude)]);
 }
