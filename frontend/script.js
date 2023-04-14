@@ -53,6 +53,17 @@ map.panTo([53.277761, 6.636075], 8);
 // de markers worden gemaakt op basis van de data in de json file
 
 
+// data.forEach(function (element) {
+//     const temperature = element.sensordatavalues.find(function (value) {
+//         return value.value_type === 'temperature';
+//     }).value;
+//     const latitude = element.location.latitude;
+//     const longitude = element.location.longitude;
+//     console.log(`Temperature: ${temperature}, Latitude: ${latitude}, Longitude: ${longitude}`);
+// });
+
+
+
 var pin = L.icon({
   iconUrl: "pin.png",
   iconSize: [50, 50],
