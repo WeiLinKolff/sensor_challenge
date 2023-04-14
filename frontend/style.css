@@ -37,16 +37,23 @@ body{
     display: none;
 }
 #sidebarShow {
+    display: flex;
+    text-align: center;
+    justify-content: center;
     height: 3vh;
     width: 3vh;
-    top: 2vh;
+    top: 3vh;
     
     left: 2vh;
     z-index: 999999;
     position: absolute;
     font-size: 3vh;
     color: white;
-    
+}
+
+#sidebarShow:hover {
+    text-decoration: underline solid white 3px;
+    cursor: pointer;
 }
 
 h1, p {
@@ -59,7 +66,7 @@ h1, p {
     text-align: center;
     justify-content: center;
     align-items: center;
-    gap: 70vw;
+    gap: 69vw;
 }
 
 #sb-info{
