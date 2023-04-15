@@ -25,7 +25,7 @@ openSidebarButton.addEventListener("click", sidebarToggle);
 //   return 33 + (T - 33) * (0, 474 + 0, (454 * W) ^ 0, 5 - 0, 0454 * W);
 // }
 // hier onder begint de js van de kaart
-var map = L.map("map").setView([52.199, 5.515], 8);
+var map = L.map("map").setView([51.985406, 5.743262], 10);
 
 L.tileLayer(
   "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
@@ -36,16 +36,16 @@ L.tileLayer(
   }
 ).addTo(map);
 
-// map.on("click", onMapClick);
+map.on("click", onMapClick);
 
-// var popup = L.popup();
+var popup = L.popup();
 
-// function onMapClick(e) {
-//     popup
-//         .setLatLng(e.latlng)
-//         .setContent("U heeft hier op de map geklikt: " + e.latlng.toString())
-//         .openOn(map);
-// }
+function onMapClick(e) {
+    popup
+        .setLatLng(e.latlng)
+        .setContent("U heeft hier op de map geklikt: " + e.latlng.toString())
+        .openOn(map);
+}
 
 // map.on("click", onMapClick);
 map.panTo([53.277761, 6.636075], 8);
@@ -54,14 +54,10 @@ map.panTo([53.277761, 6.636075], 8);
 // een for each loop om alle markers te maken
 // de markers worden gemaakt op basis van de data in de json file
 
-var pin = L.icon({
-  iconUrl: "pin.png",
-  iconSize: [50, 50],
-  iconAnchor: [25, 50],
-  popupAnchor: [0, -50],
-});
+
 var ColorIcon = L.Icon.extend({
   options: {
+      customId: "",
       shadowUrl: 'img/temp1.png',
       iconSize:     [10, 10],
       shadowSize:   [10, 10],
@@ -89,7 +85,14 @@ var ColorIcon = L.Icon.extend({
   const Color9 = new ColorIcon({iconUrl: "img/temp10.png"});
 
   const Color10 = new ColorIcon({iconUrl: "img/temp11.png"});
-
+  // deze waarden moet later worden aangepast opbasis van gemiddelde temperatuur in de regio
+  const localForcast =  8;
+  function setMarkerTitle(customId){
+    var result = customId;
+    
+    return result;
+}
+function createMarkers(minLat, maxLat, minLng, maxLng){
 fetch("../backend/output.json")
   .then((response) => response.json())
   .then((data) => {
@@ -97,42 +100,44 @@ fetch("../backend/output.json")
       if (
         item.location.indoor === 0 &&
         item.sensordatavalues &&
-        item.sensordatavalues.length > 0
+        item.sensordatavalues.length > 0 && 
+        item.location.latitude < maxLat &&
+        item.location.latitude > minLat &&
+        item.location.longitude > minLng &&
+        item.location.longitude < maxLng
       ) {
         const latitude = item.location.latitude;
         const longitude = item.location.longitude;
         const temperatureValue = item.sensordatavalues.find(
           (item) => item.value_type === "temperature"
         );
-        if (temperatureValue && temperatureValue.value) {
+        if (temperatureValue && temperatureValue.value && latitude < maxLat && latitude > minLat && longitude > minLng && longitude < maxLng) {
           const temperature = parseFloat(temperatureValue.value);
-          if (temperature < 0) {
-            L.marker([latitude, longitude], {icon: Color1, id: temperature.toString()}).addTo(map);;
-          } else if (temperature > 1) {
-            L.marker([latitude, longitude], {icon: Color2, id: temperature.toString()}).addTo(map);
-          } else if (temperature > 3) {
-            L.marker([latitude, longitude], {icon: Color3, id: temperature.toString()}).addTo(map);
-          } else if (temperature > 9) {
-            L.marker([latitude, longitude], {icon: Color4, id: temperature.toString()}).addTo(map);
-          } else if (temperature > 12) {
-            L.marker([latitude, longitude], {icon: Color5, id: temperature.toString()}).addTo(map);
-          } else if (temperature > 15) {
-            L.marker([latitude, longitude], {icon: Color6, id: temperature.toString()}).addTo(map);
-          } else if (temperature > 18) {
-            L.marker([latitude, longitude], {icon: Color7, id: temperature.toString()}).addTo(map);
-          } else if (temperature > 21) {
-            L.marker([latitude, longitude], {icon: Color8, id: temperature.toString()}).addTo(map);
-          } else if (temperature > 24) {
-            L.marker([latitude, longitude], {icon: Color9, id: temperature.toString()}).addTo(map);
-          } else if (temperature > 27) {
-            L.marker([latitude, longitude], {icon: Color10, id: temperature.toString()}).addTo(map);
-          }
+          if (temperature < localForcast - 2) {
+            L.marker([latitude, longitude], {icon: Color1, myCustomId: temperature.toString(), title: setMarkerTitle(temperature.toString())}).addTo(map);;
+          } else if (temperature < localForcast -1) {
+            L.marker([latitude, longitude], {icon: Color2, myCustomId: temperature.toString(), title: setMarkerTitle(temperature.toString())}).addTo(map);
+          } else if (temperature < localForcast) {
+            L.marker([latitude, longitude], {icon: Color3, myCustomId: temperature.toString(), title: setMarkerTitle(temperature.toString())}).addTo(map);
+          } else if (temperature > localForcast) {
+            L.marker([latitude, longitude], {icon: Color4, myCustomId: temperature.toString(), title: setMarkerTitle(temperature.toString())}).addTo(map);
+          } else if (temperature > localForcast + 1) {
+            L.marker([latitude, longitude], {icon: Color5, myCustomId: temperature.toString(), title: setMarkerTitle(temperature.toString())}).addTo(map);
+          } else if (temperature > localForcast + 2) {
+            L.marker([latitude, longitude], {icon: Color6, myCustomId: temperature.toString(), title: setMarkerTitle(temperature.toString())}).addTo(map);
+          } else if (temperature > localForcast + 3) {
+            L.marker([latitude, longitude], {icon: Color7, myCustomId: temperature.toString(), title: setMarkerTitle(temperature.toString())}).addTo(map);
+          } else if (temperature > localForcast + 4) {
+            L.marker([latitude, longitude], {icon: Color8, myCustomId: temperature.toString(), title: setMarkerTitle(temperature.toString())}).addTo(map);
+          } else if (temperature > localForcast + 5) {
+            L.marker([latitude, longitude], {icon: Color9, myCustomId: temperature.toString(), title: setMarkerTitle(temperature.toString())}).addTo(map);
+          } else if (temperature > localForcast + 6) {
+            L.marker([latitude, longitude], {icon: Color10, myCustomId: temperature.toString(), title: setMarkerTitle(temperature.toString())}).addTo(map);
+          } //else{
+          //   L.marker([latitude, longitude], {icon: Color10, id: temperature.toString()}).addTo(map);
+          // }
           
-          // L.circle([latitude, longitude], {
-          //   radius: 200,
-          //   color: DynamicColor,
-          //   className: `sensorMarker lat${latitude} lng${longitude}`,
-          // }).addTo(map);
+       
           L.bind;
         } else {
           console.log("Temperature value not found for item:", item);
@@ -203,8 +208,8 @@ fetch("../backend/output.json")
         }
       }
       
-  });
-
+  })
+}
 
   // average temp in screen
 
@@ -220,11 +225,20 @@ fetch("../backend/output.json")
 // // function getDataFromScreen(mapCornerNE, mapCornerSW){
   
 // // }
-const allSensors = document.getElementsByClassName('sensorMarker');
-function setId(){
-  for(let i = 0; i < allSensors.length; i++){
-    allSensors[i].id = i.toString();
-    
+
+let previousBounds = null;
+map.on('moveend', function() {
+  let bounds = map.getBounds();
+  
+  let northEast = bounds.getNorthEast(); // returns the northeast corner coordinates
+  let southWest = bounds.getSouthWest(); // returns the southwest corner coordinates
+  createMarkers(southWest.lat, northEast.lat, southWest.lng, northEast.lng);
+  let markers = document.getElementsByClassName("leaflet-marker-icon");
+  const popupText = document.getElementById('popupText')
+  for(let i = 0; i < markers.length; i++){
+    markers[i].on('click', function() {
+      popupText.innerText = ""
+    });
   }
-}
-setId();
+  
+});
