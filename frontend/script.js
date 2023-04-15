@@ -60,6 +60,35 @@ var pin = L.icon({
   iconAnchor: [25, 50],
   popupAnchor: [0, -50],
 });
+var ColorIcon = L.Icon.extend({
+  options: {
+      shadowUrl: 'img/temp1.png',
+      iconSize:     [10, 10],
+      shadowSize:   [10, 10],
+      iconAnchor:   [10, 10],
+      shadowAnchor: [10, 10],
+      popupAnchor:  [10, 10]
+  }
+});
+
+  const Color1 = new ColorIcon({iconUrl: "img/temp2.png"});
+  const Color2 = new ColorIcon({iconUrl: "img/temp3.png"});
+
+  const Color3 = new ColorIcon({iconUrl: "img/temp4.png"});
+
+  const Color4 = new ColorIcon({iconUrl: "img/temp5.png"});
+
+  const Color5 = new ColorIcon({iconUrl: "img/temp6.png"});
+
+  const Color6 = new ColorIcon({iconUrl: "img/temp7.png"});
+
+  const Color7 = new ColorIcon({iconUrl: "img/temp8.png"});
+
+  const Color8 = new ColorIcon({iconUrl: "img/temp9.png"});
+
+  const Color9 = new ColorIcon({iconUrl: "img/temp10.png"});
+
+  const Color10 = new ColorIcon({iconUrl: "img/temp11.png"});
 
 fetch("../backend/output.json")
   .then((response) => response.json())
@@ -78,32 +107,32 @@ fetch("../backend/output.json")
         if (temperatureValue && temperatureValue.value) {
           const temperature = parseFloat(temperatureValue.value);
           if (temperature < 0) {
-            var DynamicColor = "#1D3354";
+            L.marker([latitude, longitude], {icon: Color1, id: temperature.toString()}).addTo(map);;
+          } else if (temperature > 1) {
+            L.marker([latitude, longitude], {icon: Color2, id: temperature.toString()}).addTo(map);
           } else if (temperature > 3) {
-            var DynamicColor = "#0008FF";
-          } else if (temperature > 6) {
-            var DynamicColor = "#2007E1";
+            L.marker([latitude, longitude], {icon: Color3, id: temperature.toString()}).addTo(map);
           } else if (temperature > 9) {
-            var DynamicColor = "#4006C2";
+            L.marker([latitude, longitude], {icon: Color4, id: temperature.toString()}).addTo(map);
           } else if (temperature > 12) {
-            var DynamicColor = "#6005A3";
+            L.marker([latitude, longitude], {icon: Color5, id: temperature.toString()}).addTo(map);
           } else if (temperature > 15) {
-            var DynamicColor = "#800484";
+            L.marker([latitude, longitude], {icon: Color6, id: temperature.toString()}).addTo(map);
           } else if (temperature > 18) {
-            var DynamicColor = "#A00365";
+            L.marker([latitude, longitude], {icon: Color7, id: temperature.toString()}).addTo(map);
           } else if (temperature > 21) {
-            var DynamicColor = "#C00246";
+            L.marker([latitude, longitude], {icon: Color8, id: temperature.toString()}).addTo(map);
           } else if (temperature > 24) {
-            var DynamicColor = "#E00127";
+            L.marker([latitude, longitude], {icon: Color9, id: temperature.toString()}).addTo(map);
           } else if (temperature > 27) {
-            var DynamicColor = "#FF0008";
+            L.marker([latitude, longitude], {icon: Color10, id: temperature.toString()}).addTo(map);
           }
-
-          L.circle([latitude, longitude], {
-            radius: 200,
-            color: DynamicColor,
-            className: "sensorMarker",
-          }).addTo(map);
+          
+          // L.circle([latitude, longitude], {
+          //   radius: 200,
+          //   color: DynamicColor,
+          //   className: `sensorMarker lat${latitude} lng${longitude}`,
+          // }).addTo(map);
           L.bind;
         } else {
           console.log("Temperature value not found for item:", item);
@@ -124,15 +153,16 @@ fetch("../backend/output.json")
     }
 
     function showPopup(event) {
-        // Get the clicked marker's latitude and longitude
-        const latitude = event.target._latlng.lat;
-        const longitude = event.target._latlng.lng;
+  //       // Get the clicked marker's latitude and longitude
+        const lanLng = event.target.getLatLng();
+        const lng = lanLng.lng;
+        const lat = lanLng.lat
       
         // Find the data item for the clicked marker
         const item = data.find(
           (item) =>
-            item.location.latitude === latitude &&
-            item.location.longitude === longitude
+            item.location.latitude === lat &&
+            item.location.longitude === lng
         );
       
         if (item) {
@@ -144,7 +174,7 @@ fetch("../backend/output.json")
           if (temperatureValue && temperatureValue.value) {
             const temperature = parseFloat(temperatureValue.value);
       
-            // Set the content of the popup to include the temperature value
+  //           // Set the content of the popup to include the temperature value
             const popupContent = `
               <div class="popup">
                 <h4>Temperatuur: ${temperature} &deg;C</h4>
@@ -192,7 +222,7 @@ fetch("../backend/output.json")
 // // }
 const allSensors = document.getElementsByClassName('sensorMarker');
 function setId(){
-  for(let i = 0; i < allSensors.length(); i++){
+  for(let i = 0; i < allSensors.length; i++){
     allSensors[i].id = i.toString();
     
   }
